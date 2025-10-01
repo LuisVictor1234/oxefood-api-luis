@@ -7,6 +7,12 @@ import java.util.List;
 
 @Service
 public class EntregadorService {
+
+    @Transactional
+public void delete(Long id) {
+    repository.deleteById(id);
+}
+
 @Transactional
     public void update(Long id, Entregador entregadorAlterado) {
     Entregador entregador = repository.findById(id).get();
@@ -46,4 +52,5 @@ public class EntregadorService {
         entregador.setHabilitado(Boolean.TRUE);
         return repository.save(entregador);
     }
+    
 }

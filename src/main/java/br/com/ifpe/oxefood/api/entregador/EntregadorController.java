@@ -13,11 +13,7 @@ import java.util.List;
 @RequestMapping("/api/entregador")
 @CrossOrigin
 public class EntregadorController {
-    @PutMapping("/{id}")
-    public ResponseEntity<Entregador> update(@PathVariable("id") Long id, @RequestBody EntregadorRequest request) {
-    entregadorService.update(id, request.build());
-    return ResponseEntity.ok().build();
-}
+
     @Autowired
     private EntregadorService entregadorService;
 
@@ -35,5 +31,17 @@ public class EntregadorController {
     public ResponseEntity<Entregador> save(@RequestBody EntregadorRequest request) {
         Entregador entregador = entregadorService.save(request.build());
         return new ResponseEntity<>(entregador, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Entregador> update(@PathVariable("id") Long id, @RequestBody EntregadorRequest request) {
+        entregadorService.update(id, request.build());
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        entregadorService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
