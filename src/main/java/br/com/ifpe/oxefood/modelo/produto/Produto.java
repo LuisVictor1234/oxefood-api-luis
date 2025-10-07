@@ -1,6 +1,5 @@
 package br.com.ifpe.oxefood.modelo.produto;
 
-import br.com.ifpe.oxefood.modelo.produto.CategoriaProduto;
 import br.com.ifpe.oxefood.util.entity.EntidadeAuditavel;
 import jakarta.persistence.*;
 import lombok.*;
