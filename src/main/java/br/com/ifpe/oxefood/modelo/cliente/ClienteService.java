@@ -1,80 +1,56 @@
 package br.com.ifpe.oxefood.modelo.cliente;
 
 import jakarta.transaction.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class ClienteService {
 
-      @Transactional
-   public EnderecoCliente adicionarEnderecoCliente(Long clienteId, EnderecoCliente endereco) {
+    @Autowired
+    private ClienteRepository repository;
 
-       Cliente cliente = this.obterPorID(clienteId);
-      
-       //Primeiro salva o EnderecoCliente:
+    @Autowired
+    private EnderecoClienteRepository enderecoRepository;
 
-       endereco.setCliente(cliente);
-       endereco.setHabilitado(Boolean.TRUE);
-       enderecoClienteRepository.save(endereco);
-      
-       //Depois acrescenta o endereço criado ao cliente e atualiza o cliente:
+    @Transactional
+    public Cliente save(Cliente cliente) {
+        if (cliente.getEndereco() != null && cliente.getEndereco().getId() != null) {
+            EnderecoCliente endereco = enderecoRepository.findById(cliente.getEndereco().getId()).get();
+            cliente.setEndereco(endereco);
+        }
 
-       List<EnderecoCliente> listaEnderecoCliente = cliente.getEnderecos();
-      
-       if (listaEnderecoCliente == null) {
-           listaEnderecoCliente = new ArrayList<EnderecoCliente>();
-       }
-      
-       listaEnderecoCliente.add(endereco);
-       cliente.setEnderecos(listaEnderecoCliente);
-       repository.save(cliente);
-      
-       return endereco;
-   }
-
-
-     @Transactional
-   public void delete(Long id) {
-
-       Cliente cliente = repository.findById(id).get();
-       cliente.setHabilitado(Boolean.FALSE);
-
-       repository.save(cliente);
-   }
+        cliente.setHabilitado(Boolean.TRUE);
+        return repository.save(cliente);
+    }
 
     public List<Cliente> listarTodos() {
-  
         return repository.findAll();
     }
 
     public Cliente obterPorID(Long id) {
-
         return repository.findById(id).get();
     }
- @Transactional
-   public void update(Long id, Cliente clienteAlterado) {
 
-      Cliente cliente = repository.findById(id).get();
-      cliente.setNome(clienteAlterado.getNome());
-      cliente.setDataNascimento(clienteAlterado.getDataNascimento());
-      cliente.setCpf(clienteAlterado.getCpf());
-      cliente.setFoneCelular(clienteAlterado.getFoneCelular());
-      cliente.setFoneFixo(clienteAlterado.getFoneFixo());
-	    
-      repository.save(cliente);
-  }
-   @Autowired
-   private ClienteRepository repository;
+    @Transactional
+    public void update(Long id, Cliente clienteAlterado) {
+        Cliente cliente = repository.findById(id).get();
 
-   @Transactional
-   public Cliente save(Cliente cliente) {
+        cliente.setNome(clienteAlterado.getNome());
+        cliente.setCpf(clienteAlterado.getCpf());
+        cliente.setDataNascimento(clienteAlterado.getDataNascimento());
+        cliente.setFoneCelular(clienteAlterado.getFoneCelular());
+        cliente.setFoneFixo(clienteAlterado.getFoneFixo());
+        cliente.setEndereco(clienteAlterado.getEndereco());
 
-       cliente.setHabilitado(Boolean.TRUE);
-       return repository.save(cliente);
-   }
+        repository.save(cliente);
+    }
 
+    @Transactional
+    public void delete(Long id) {
+        Cliente cliente = repository.findById(id).get();
+        cliente.setHabilitado(Boolean.FALSE);
+        repository.save(cliente);
+    }
 }

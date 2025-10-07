@@ -1,4 +1,5 @@
-import br.com.ifpe.oxefood.api.cliente.EnderecoCliente;
+package br.com.ifpe.oxefood.api.cliente;
+import br.com.ifpe.oxefood.modelo.cliente.EnderecoCliente;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -29,12 +30,12 @@ public class EnderecoClienteRequest {
    public EnderecoCliente build() {
 
        return EnderecoCliente.builder()
-               .rua(rua)
+               .logradouro(rua)
                .numero(numero)
                .bairro(bairro)
                .cep(cep)
                .cidade(cidade)
-               .estado(estado)
+               .uf(estado)
                .complemento(complemento)
                .build();
    }
