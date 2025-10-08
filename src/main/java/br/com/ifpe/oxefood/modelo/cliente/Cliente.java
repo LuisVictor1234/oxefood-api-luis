@@ -31,7 +31,6 @@ public class Cliente extends EntidadeAuditavel {
     @Column(length = 15)
     private String foneFixo;
 
-    @Column(length = 10)
     private LocalDate dataNascimento;
 
     @ManyToOne
