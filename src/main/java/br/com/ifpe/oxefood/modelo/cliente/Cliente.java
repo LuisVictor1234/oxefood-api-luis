@@ -1,5 +1,7 @@
 package br.com.ifpe.oxefood.modelo.cliente;
 
+import java.time.LocalDate;
+
 import br.com.ifpe.oxefood.util.entity.EntidadeAuditavel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,7 +32,7 @@ public class Cliente extends EntidadeAuditavel {
     private String foneFixo;
 
     @Column(length = 10)
-    private String dataNascimento;
+    private LocalDate dataNascimento;
 
     @ManyToOne
     @JoinColumn(name = "endereco_id")
