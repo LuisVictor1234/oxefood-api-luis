@@ -7,11 +7,12 @@ import br.com.ifpe.oxefood.modelo.produto.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/produto")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProdutoController {
 
     @Autowired
